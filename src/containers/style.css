@@ -1,0 +1,23 @@
+.form-todo {
+    width: 500px;
+    margin: auto;
+}
+.form-todo button {
+    padding: 6px 37px;
+    border-style: solid;
+    font-weight: 600;
+    font-family: sans-serif;
+    border-color: transparent;
+    cursor: pointer;
+    color: white;
+}
+.addbutton {
+    background-color: lightgreen;
+}
+.removebutton {
+    background-color: red;
+}
+.form-todo h3 {
+    font-family: sans-serif;
+    letter-spacing: 2px;
+}

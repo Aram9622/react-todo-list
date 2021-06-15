@@ -1,0 +1,14 @@
+.checkbox {
+    width: 19px;
+}
+.title {
+    width: 200px;
+}
+.editButton {
+    background-color: teal;
+}
+.pagination {
+    list-style: none;
+    display: flex;
+    justify-content: space-evenly;
+}
