@@ -25,20 +25,27 @@ export default function Home() {
     }
 
     let addTodo = async (item) => {
-
-        setData([
-            ...data,
-            todo
-        ]);
-         setTodo({
-            ...todo,
-            title: ''
-        });
-        await new Promise(res=>{
-            res([...data, todo])
-        }).then(res=>{
-            window.localStorage.setItem('data', JSON.stringify(res));
-        })
+        
+        if(!todo.title == ''){
+            setData([
+                ...data,
+                todo
+            ]);
+             setTodo({
+                ...todo,
+                title: ''
+            });
+            await new Promise(res=>{
+                res([...data, todo])
+            }).then(res=>{
+                window.localStorage.setItem('data', JSON.stringify(res));
+            })
+            document.querySelector('input').style.border='2px solid #e5e5e5';
+        }
+        else{
+            document.querySelector('input').style.border='2px solid red';
+        }
+        
     }
 
     function removeitem(id) {
