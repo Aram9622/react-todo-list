@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import TodoList from "../components/todoList/TodoList";
 import Pagination from "react-js-pagination";
+import Archive from "../components/archive/Archive";
 import './style.css'
 export default function Home() {
     let [todo, setTodo] = useState({
@@ -9,13 +10,12 @@ export default function Home() {
         isComplete: false
     })
 
-    
-    let [data, setData] = useState([]);
+    let [archiveData, setArchiveData] = useState([])
+    let [data, setData] = useState(window.localStorage.getItem(`data`) ? JSON.parse(window.localStorage.getItem(`data`)) : []);
     let [activepage, setActivePage] = useState({
-        activePage:1,
+        activePage: window.localStorage.getItem(`page`) ? window.localStorage.getItem(`page`) : 1,
     })
-
-    let [filter,setFilter] = useState(1)
+    let [filter, setFilter] = useState(1)
     function addTodoState(e) {
         setTodo({
             ...todo,
@@ -24,21 +24,29 @@ export default function Home() {
         })
     }
 
-    function addTodo(e) {
+    let addTodo = async (item) => {
+
         setData([
             ...data,
             todo
-        ])
-
-
-        setTodo({
+        ]);
+         setTodo({
             ...todo,
             title: ''
+        });
+        await new Promise(res=>{
+            res([...data, todo])
+        }).then(res=>{
+            window.localStorage.setItem('data', JSON.stringify(res));
         })
     }
 
     function removeitem(id) {
-        setData(data.filter((item, index) => { return index !== id }))
+        console.log(id, `IDDDDDDDDD`);
+        let dataLocal = JSON.parse(window.localStorage.getItem('data'))
+        let filterData = dataLocal.filter((item, index) => { return index !== id });
+        setData(filterData)
+        window.localStorage.setItem(`data`, JSON.stringify(filterData))
     }
 
     function CheckIsComplete(e) {
@@ -54,13 +62,31 @@ export default function Home() {
     }
 
     function handlePageChange(pageNumber) {
-        console.log(`active page is ${pageNumber}`);
-        setActivePage({activePage: pageNumber});
-      }
+        setActivePage({ activePage: pageNumber });
+        window.localStorage.setItem('page', pageNumber);
+    }
 
-      function filterItem(e){
-          setFilter(Number(e.target.value))
-      }
+    function filterItem(e) {
+        setFilter(Number(e.target.value))
+    }
+
+    function archivitem(id) {
+        setArchiveData([
+            ...archiveData,
+            data[id]
+        ]);
+        setData(data.filter((item, index) => { return index !== id }))
+    }
+
+    function activeitem(id) {
+        console.log(id, 'IDDDDDDDDDDDDDDDDDDDD')
+        setData([
+            ...data,
+            archiveData[id]
+        ])
+        setArchiveData(archiveData.filter((item, index) => { return index !== id }))
+    }
+    console.log(window.localStorage.getItem('page'),)
     return (
         <>
             <div className="form-todo">
@@ -74,16 +100,18 @@ export default function Home() {
                     <option value="30">30</option>
                 </select>
                 <p></p>
-                <button onClick={addTodo} className='addbutton'>Add</button>
-                <TodoList todo={data} remove={removeitem} complete={CheckIsComplete} page={activepage.activePage} itemCount={filter}/>
+                <button onClick={() => addTodo(todo)} className='addbutton'>Add</button>
+                <TodoList todo={data} remove={removeitem} complete={CheckIsComplete} page={activepage.activePage} itemCount={5} archiveItem={archivitem} />
                 <Pagination
-                    activePage={activepage.activePage}
-                    itemsCountPerPage={filter}
+                    activePage={ activepage.activePage}
+                    itemsCountPerPage={5}
                     totalItemsCount={data.length}
                     pageRangeDisplayed={5}
                     onChange={handlePageChange}
                     hideNavigation={false}
-                    />
+                />
+
+                {archiveData.length > 0 ? <Archive data={archiveData} activeItem={activeitem} className='archive' /> : null}
             </div>
 
 

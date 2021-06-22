@@ -12,7 +12,7 @@ export default function TodoList(props) {
                     
                         return (
                             <>
-                                <TodoItem data={item} index={index} removeItem={props.remove} isComplete={props.complete}/>
+                                <TodoItem data={item} index={index} removeItem={props.remove} isComplete={props.complete} archiveitem={props.archiveItem}/>
                             </>
                         )
                     

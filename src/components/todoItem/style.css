@@ -12,3 +12,9 @@
     display: flex;
     justify-content: space-evenly;
 }
+li.active{
+    font-weight: bold;
+}
+.archivebutton {
+    background-color:  aquamarine;
+}
