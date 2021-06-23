@@ -75,15 +75,18 @@ export default function Home() {
     }
 
     function CheckIsComplete(e) {
-        console.log(e);
+        let localdata = JSON.parse(window.localStorage.getItem('data'));
         setData(
-            data.map(item => {
+            data.map((item, index) => {
                 if (item.id === e) {
-                    item.isComplete = !item.isComplete
+                    localdata[index].isComplete = !item.isComplete;
+                    item.isComplete = !item.isComplete;
                 }
                 return item
             })
         )
+        // console.log(localdata)
+        window.localStorage.setItem('data', JSON.stringify(localdata))
     }
 
     function handlePageChange(pageNumber) {
@@ -104,7 +107,6 @@ export default function Home() {
     }
 
     function activeitem(id) {
-        console.log(id, 'IDDDDDDDDDDDDDDDDDDDD')
         setData([
             ...data,
             archiveData[id]

@@ -34,11 +34,6 @@ export default function TodoItem(props) {
         }
     }
 
-    const aaa = (e) => { 
-        props.isComplete(props.data.id);
-    
-    }
-
     return (
         <>
 
@@ -47,16 +42,14 @@ export default function TodoItem(props) {
                 {!isEditing ? <div className='title'>{props.data.isComplete ? <del>{props.data.title}</del> : props.data.title}</div> :
                     <div className='title' ><input type='text' style={{ border: 'none' }} className='title inputitle' defaultValue={props.data.title} /></div>
                 } */}
-            <TableRow hover key={props.index} style={props.data.isComplete ? styles.row : null} onClick={()=>{props.isComplete(props.data.id)}}>
+            <TableRow hover key={props.index} style={props.data.isComplete ? styles.row : null} >
                 <TableCell align="left" >
                     <Checkbox
                         color="primary"
                         inputProps={{ 'aria-label': 'secondary checkbox' }}
-                        onChange={aaa}
+                        onChange={()=>{props.isComplete(props.data.id)}}
                         checked={props.data.isComplete ? 'checked' : false}
                     />
-                    {/* <div className='checkbox'><input type="checkbox" onChange={() => { props.isComplete(props.data.id) }} /></div> */}
-                    {/* {props.data.id} */}
                 </TableCell>
                 <TableCell component="th" scope="row" >
                     {!isEditing ? <div className='title'>{props.data.title}</div> :
@@ -74,16 +67,6 @@ export default function TodoItem(props) {
                     <Button className='archivebutton' disabled={props.data.isComplete ? 'disabled' : false} startIcon={<ArchiveIcon />} onClick={() => { props.archiveitem(props.index) }} variant="contained" color="default">Archive</Button>
                 </TableCell>
             </TableRow>
-            {/* <div className='buttonEdit'>
-                    <Button className='editButton' onClick={handleEdit} variant="contained" color="primary">{isEditing ? `Save` : `Edit`}</Button>
-                </div>
-                <div className='buttonAction'>
-                    <Button className='removebutton' onClick={() => { props.removeItem(props.index) }} variant="contained" color="secondary">Delete</Button>
-                </div>
-                <div className='buttonAction'>
-                    <Button className='archivebutton' onClick={() => { props.archiveitem(props.index) }} variant="contained" color="default">Archive</Button>
-                </div> */}
-            {/* </div> */}
 
         </>
     )
