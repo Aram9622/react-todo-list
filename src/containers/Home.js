@@ -2,8 +2,26 @@ import { useEffect, useState } from "react"
 import TodoList from "../components/todoList/TodoList";
 import Pagination from "react-js-pagination";
 import Archive from "../components/archive/Archive";
+import { Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 import './style.css'
+
+
+const useStyles = makeStyles({
+    table: {
+        minWidth: 650,
+    },
+});
+
 export default function Home() {
+    const classes = useStyles();
     let [todo, setTodo] = useState({
         id: Date.now(),
         title: '',
@@ -25,27 +43,27 @@ export default function Home() {
     }
 
     let addTodo = async (item) => {
-        
-        if(!todo.title == ''){
+
+        if (!todo.title == '') {
             setData([
                 ...data,
                 todo
             ]);
-             setTodo({
+            setTodo({
                 ...todo,
                 title: ''
             });
-            await new Promise(res=>{
+            await new Promise(res => {
                 res([...data, todo])
-            }).then(res=>{
+            }).then(res => {
                 window.localStorage.setItem('data', JSON.stringify(res));
             })
-            document.querySelector('input').style.border='2px solid #e5e5e5';
+            document.querySelector('input').style.border = '2px solid #e5e5e5';
         }
-        else{
-            document.querySelector('input').style.border='2px solid red';
+        else {
+            document.querySelector('input').style.border = '2px solid red';
         }
-        
+
     }
 
     function removeitem(id) {
@@ -99,18 +117,19 @@ export default function Home() {
             <div className="form-todo">
                 <h3>Title</h3>
                 <input type="text" name='title' onChange={addTodoState} value={todo.title} />
-                <select name="" id="" onChange={filterItem}>
+                {/* <select name="" id="" onChange={filterItem}>
                     <option value="1">1</option>
                     <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
                     <option value="30">30</option>
-                </select>
+                </select> */}
                 <p></p>
-                <button onClick={() => addTodo(todo)} className='addbutton'>Add</button>
-                <TodoList todo={data} remove={removeitem} complete={CheckIsComplete} page={activepage.activePage} itemCount={5} archiveItem={archivitem} />
+                <Button onClick={() => addTodo(todo)} className='addbutton'  variant="contained" color="primary">Add</Button>
+                {/* <button onClick={() => addTodo(todo)} className='addbutton'>Add</button> */}
+                <TodoList todo={data} remove={removeitem} complete={CheckIsComplete} style={useStyles} page={activepage.activePage} itemCount={5} archiveItem={archivitem} />
                 <Pagination
-                    activePage={ activepage.activePage}
+                    activePage={activepage.activePage}
                     itemsCountPerPage={5}
                     totalItemsCount={data.length}
                     pageRangeDisplayed={5}
