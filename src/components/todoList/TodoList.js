@@ -6,7 +6,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import TodoItem from '../todoItem/todoItem'
+import TodoItem from '../todoItem/todoItem';
+
 export default function TodoList(props) {
     let page = props.page;
     let item1 = props.itemCount * page;

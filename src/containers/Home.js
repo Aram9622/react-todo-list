@@ -125,17 +125,24 @@ export default function Home() {
                     <option value="30">30</option>
                 </select> */}
                 <p></p>
-                <Button onClick={() => addTodo(todo)} className='addbutton'  variant="contained" color="primary">Add</Button>
+                <Button onClick={() => addTodo(todo)} className='addbutton' variant="contained" color="primary">Add</Button>
                 {/* <button onClick={() => addTodo(todo)} className='addbutton'>Add</button> */}
-                <TodoList todo={data} remove={removeitem} complete={CheckIsComplete} style={useStyles} page={activepage.activePage} itemCount={5} archiveItem={archivitem} />
-                <Pagination
-                    activePage={activepage.activePage}
-                    itemsCountPerPage={5}
-                    totalItemsCount={data.length}
-                    pageRangeDisplayed={5}
-                    onChange={handlePageChange}
-                    hideNavigation={false}
-                />
+                {
+                    data.length === 0 ? (<><p>No data to show</p></>) :
+                        <TodoList todo={data} remove={removeitem} complete={CheckIsComplete} style={useStyles} page={activepage.activePage} itemCount={5} archiveItem={archivitem} />
+                }
+                {
+                    data.length === 0 ? null :
+                        <Pagination
+                            activePage={activepage.activePage}
+                            itemsCountPerPage={5}
+                            totalItemsCount={data.length}
+                            pageRangeDisplayed={5}
+                            onChange={handlePageChange}
+                            hideNavigation={false}
+                        />
+                }
+
 
                 {archiveData.length > 0 ? <Archive data={archiveData} activeItem={activeitem} className='archive' /> : null}
             </div>

@@ -1,5 +1,16 @@
+/* .MuiPaper-root {
+    overflow-x: initial !important;
+}
+.MuiTableCell-body {
+    position: relative;
+}
 .checkbox {
     width: 19px;
+    position: absolute;
+    left: -11px;
+} */
+.MuiTableCell-alignLeft {
+    padding-left: 3px !important;
 }
 .title {
     width: 200px;
