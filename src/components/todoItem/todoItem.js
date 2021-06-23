@@ -2,6 +2,11 @@ import { useState } from 'react'
 import { Button } from '@material-ui/core';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import SaveIcon from '@material-ui/icons/Save';
+import ArchiveIcon from '@material-ui/icons/Archive';
+import Icon from '@material-ui/core/Icon';
 import './style.css'
 export default function TodoItem(props) {
     let [isEditing, setIsEditing] = useState(false)
@@ -29,7 +34,7 @@ export default function TodoItem(props) {
                 {!isEditing ? <div className='title'>{props.data.isComplete ? <del>{props.data.title}</del> : props.data.title}</div> :
                     <div className='title' ><input type='text' style={{ border: 'none' }} className='title inputitle' defaultValue={props.data.title} /></div>
                 } */}
-                <TableRow key={props.index}>
+                <TableRow hover key={props.index}>
                     <TableCell align="left" >
                         {props.data.id}
                     </TableCell>
@@ -39,14 +44,14 @@ export default function TodoItem(props) {
                         }
                     </TableCell>
                     <TableCell align="left" >
-                        <Button className='editButton' onClick={handleEdit} variant="contained" color="primary">{isEditing ? `Save` : `Edit`}</Button>
+                        <Button className='editButton' startIcon={isEditing ? <SaveIcon /> : <EditIcon/>}  onClick={handleEdit} variant="contained" color="primary">{isEditing ? `Save` : `Edit`}</Button>
                     </TableCell>
                     <TableCell align="left" >
-                        <Button className='removebutton' onClick={() => { props.removeItem(props.index) }} variant="contained" color="secondary">Delete</Button>
+                        <Button className='removebutton' startIcon={<DeleteIcon />} onClick={() => { props.removeItem(props.index) }} variant="contained" color="secondary">Delete</Button>
 
                     </TableCell>
                     <TableCell align="left" >
-                        <Button className='archivebutton' onClick={() => { props.archiveitem(props.index) }} variant="contained" color="default">Archive</Button>
+                        <Button className='archivebutton' startIcon={<ArchiveIcon/>} onClick={() => { props.archiveitem(props.index) }} variant="contained" color="default">Archive</Button>
                     </TableCell>
                 </TableRow>
                 {/* <div className='buttonEdit'>

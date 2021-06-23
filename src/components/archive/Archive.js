@@ -7,7 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 export default function Archive(props) {
     return (
         <>
@@ -25,12 +25,12 @@ export default function Archive(props) {
                             props.data.map((item, index) => {
                                 return (
                                     <>
-                                        <TableRow key={props.index}>
+                                        <TableRow hover key={props.index}>
                                             <TableCell align="left" >
                                                 {item.title}
                                             </TableCell>
                                             <TableCell align="right" >
-                                            <Button className='removebutton' style={{ backgroundColor: 'green' }} onClick={() => props.activeItem(index)} variant="contained" color="secondary">Active</Button>
+                                            <Button className='removebutton' startIcon={<ArrowUpwardIcon/>} style={{ backgroundColor: 'green' }} onClick={() => props.activeItem(index)} variant="contained" color="secondary">Active</Button>
                                             </TableCell>
                                         </TableRow>
                                         {/* <div style={{ display: 'flex', justifyContent: 'space-between', border: '1px solid' }}>
