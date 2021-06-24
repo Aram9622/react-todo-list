@@ -7,7 +7,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TodoItem from '../todoItem/todoItem';
-
+import Checkbox from '@material-ui/core/Checkbox';
 export default function TodoList(props) {
     let page = props.page;
     let item1 = props.itemCount * page;
@@ -21,7 +21,7 @@ export default function TodoList(props) {
                     <Table  aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell>#</TableCell>
+                                <TableCell><Checkbox/></TableCell>
                                 <TableCell>Title</TableCell>
                                 <TableCell align="left">Edit</TableCell>
                                 <TableCell align="left">Delete</TableCell>
