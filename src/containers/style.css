@@ -15,7 +15,7 @@
     background-color: lightgreen;
 }
 .removebutton {
-    background-color: red;
+    background-color: #c5112e !important;
 }
 .form-todo h3 {
     font-family: sans-serif;
