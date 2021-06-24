@@ -28,13 +28,14 @@ export default function Home() {
         title: '',
         isComplete: false
     })
-
+    let [countCompleted, setCountCompleted] = useState(0)
     let [archiveData, setArchiveData] = useState([])
     let [data, setData] = useState(window.localStorage.getItem(`data`) ? JSON.parse(window.localStorage.getItem(`data`)) : []);
     let [activepage, setActivePage] = useState({
         activePage: window.localStorage.getItem(`page`) ? window.localStorage.getItem(`page`) : 1,
     })
     let [filter, setFilter] = useState(1)
+
     function addTodoState(e) {
         setTodo({
             ...todo,
@@ -126,6 +127,12 @@ export default function Home() {
         window.localStorage.setItem('archive', JSON.stringify(a))
         console.log(a);
     }
+    let percentarrset = new Set()
+        data.map((item)=>{
+            if(item.isComplete == true){
+                percentarrset.add(item.id)
+            }
+        })
     return (
         <>
             <div className="form-todo">
@@ -156,8 +163,7 @@ export default function Home() {
                             hideNavigation={false}
                         />
                 }
-
-
+                <p style={percentarrset.size == data.length ? {color: 'green' } : percentarrset.size == 0 ? {display: 'none'} : null}>{`Completed: ${Math.round(percentarrset.size * 100 / data.length)}`}% </p>
                 {archiveData.length > 0 ? <Archive data={archiveData} activeItem={activeitem} className='archive' /> : null}
             </div>
 
