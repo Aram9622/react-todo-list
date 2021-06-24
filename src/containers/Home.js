@@ -4,25 +4,27 @@ import Pagination from "react-js-pagination";
 import Archive from "../components/archive/Archive";
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import './style.css'
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(() => ({
     table: {
         minWidth: 650,
     },
-});
+    formControl: {
+        minWidth: 120,
+    },
+    selectEmpty: {
+        marginTop: '10px',
+    },
+}));
 
 export default function Home() {
     const classes = useStyles();
-    let pageCount = 5;
+    let [pageCount, setPageCount] = useState(3)
     let [todo, setTodo] = useState({
         id: Date.now(),
         title: '',
@@ -97,7 +99,7 @@ export default function Home() {
     }
 
     function filterItem(e) {
-        setFilter(Number(e.target.value))
+        setPageCount(Number(e.target.value))
     }
 
     async function archivitem(id) {
@@ -106,12 +108,12 @@ export default function Home() {
             data[id]
         ]);
         setData(data.filter((item, index) => { return index !== id }))
-        await new Promise((res)=>{
-            res([...archiveData,data[id]]);
-        }).then((item)=>{
+        await new Promise((res) => {
+            res([...archiveData, data[id]]);
+        }).then((item) => {
             window.localStorage.setItem('archive', JSON.stringify(item));
         })
-        
+
     }
 
     function activeitem(id) {
@@ -121,30 +123,44 @@ export default function Home() {
         ])
         setArchiveData(archiveData.filter((item, index) => { return index !== id }))
         let localArchive = JSON.parse(window.localStorage.getItem('archive'))
-        let a = localArchive.filter((item, index)=>{
+        let a = localArchive.filter((item, index) => {
             return index !== id
         })
         window.localStorage.setItem('archive', JSON.stringify(a))
         console.log(a);
     }
     let percentarrset = new Set()
-        data.map((item)=>{
-            if(item.isComplete == true){
-                percentarrset.add(item.id)
-            }
-        })
+    data.map((item) => {
+        if (item.isComplete == true) {
+            percentarrset.add(item.id)
+        }
+    })
     return (
         <>
             <div className="form-todo">
                 <h3>Title</h3>
                 <input type="text" name='title' onChange={addTodoState} value={todo.title} />
                 {/* <select name="" id="" onChange={filterItem}>
-                    <option value="1">1</option>
+                    <option value="3">3</option>
                     <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
                     <option value="30">30</option>
                 </select> */}
+
+                <FormControl className={classes.formControl}>
+                    <Select
+                        value={pageCount}
+                        onChange={filterItem}
+                        displayEmpty
+                        className={classes.selectEmpty}
+                        inputProps={{ 'aria-label': 'Without label' }}
+                    >
+                        <MenuItem value={3}>3</MenuItem>
+                        <MenuItem value={5}>5</MenuItem>
+                        <MenuItem value={10}>10</MenuItem>
+                    </Select>
+                </FormControl>
                 <p></p>
                 <Button onClick={() => addTodo(todo)} className='addbutton' variant="contained" color="primary">Add</Button>
                 {/* <button onClick={() => addTodo(todo)} className='addbutton'>Add</button> */}
@@ -163,7 +179,7 @@ export default function Home() {
                             hideNavigation={false}
                         />
                 }
-                <p style={percentarrset.size == data.length ? {color: 'green' } : percentarrset.size == 0 ? {display: 'none'} : null}>{`Completed: ${Math.round(percentarrset.size * 100 / data.length)}`}% </p>
+                <p style={percentarrset.size == data.length ? { color: 'green' } : percentarrset.size == 0 ? { display: 'none' } : null}>{`Completed: ${Math.round(percentarrset.size * 100 / data.length)}`}% </p>
                 {archiveData.length > 0 ? <Archive data={archiveData} activeItem={activeitem} className='archive' /> : null}
             </div>
 
