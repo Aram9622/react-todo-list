@@ -7,8 +7,11 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import UnarchiveIcon from '@material-ui/icons/Unarchive';
 export default function Archive(props) {
+
+    let archiveLocale = JSON.parse(window.localStorage.getItem('archive'))
+    console.log(archiveLocale)
     return (
         <>
             <TableContainer component={Paper}>
@@ -30,7 +33,7 @@ export default function Archive(props) {
                                                 {item.title}
                                             </TableCell>
                                             <TableCell align="right" >
-                                            <Button className='removebutton' startIcon={<ArrowUpwardIcon/>} style={{ backgroundColor: 'green' }} onClick={() => props.activeItem(index)} variant="contained" color="secondary">Active</Button>
+                                            <Button className='removebutton' startIcon={<UnarchiveIcon/>} style={{ backgroundColor: 'green' }} onClick={() => props.activeItem(index)} variant="contained" color="secondary">Activate</Button>
                                             </TableCell>
                                         </TableRow>
                                         {/* <div style={{ display: 'flex', justifyContent: 'space-between', border: '1px solid' }}>

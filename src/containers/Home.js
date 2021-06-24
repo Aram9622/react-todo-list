@@ -22,6 +22,7 @@ const useStyles = makeStyles({
 
 export default function Home() {
     const classes = useStyles();
+    let pageCount = 5;
     let [todo, setTodo] = useState({
         id: Date.now(),
         title: '',
@@ -98,12 +99,18 @@ export default function Home() {
         setFilter(Number(e.target.value))
     }
 
-    function archivitem(id) {
+    async function archivitem(id) {
         setArchiveData([
             ...archiveData,
             data[id]
         ]);
         setData(data.filter((item, index) => { return index !== id }))
+        await new Promise((res)=>{
+            res([...archiveData,data[id]]);
+        }).then((item)=>{
+            window.localStorage.setItem('archive', JSON.stringify(item));
+        })
+        
     }
 
     function activeitem(id) {
@@ -112,8 +119,13 @@ export default function Home() {
             archiveData[id]
         ])
         setArchiveData(archiveData.filter((item, index) => { return index !== id }))
+        let localArchive = JSON.parse(window.localStorage.getItem('archive'))
+        let a = localArchive.filter((item, index)=>{
+            return index !== id
+        })
+        window.localStorage.setItem('archive', JSON.stringify(a))
+        console.log(a);
     }
-    console.log(window.localStorage.getItem('page'),)
     return (
         <>
             <div className="form-todo">
@@ -131,15 +143,15 @@ export default function Home() {
                 {/* <button onClick={() => addTodo(todo)} className='addbutton'>Add</button> */}
                 {
                     data.length === 0 ? (<><p>No data to show</p></>) :
-                        <TodoList todo={data} remove={removeitem} complete={CheckIsComplete} style={useStyles} page={activepage.activePage} itemCount={5} archiveItem={archivitem} />
+                        <TodoList todo={data} remove={removeitem} complete={CheckIsComplete} style={useStyles} page={activepage.activePage} itemCount={pageCount} archiveItem={archivitem} />
                 }
                 {
                     data.length === 0 ? null :
                         <Pagination
                             activePage={activepage.activePage}
-                            itemsCountPerPage={5}
+                            itemsCountPerPage={pageCount}
                             totalItemsCount={data.length}
-                            pageRangeDisplayed={5}
+                            pageRangeDisplayed={pageCount}
                             onChange={handlePageChange}
                             hideNavigation={false}
                         />

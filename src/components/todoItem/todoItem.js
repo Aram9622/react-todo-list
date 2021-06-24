@@ -13,7 +13,7 @@ export default function TodoItem(props) {
     console.log(isEditing)
     let styles = {
         row: {
-            backgroundColor: 'rgb(35 118 31 / 50%)'
+            opacity: '0.2',
         }
     }
     let handleEdit = (e) => {

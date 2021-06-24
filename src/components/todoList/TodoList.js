@@ -11,7 +11,7 @@ import TodoItem from '../todoItem/todoItem';
 export default function TodoList(props) {
     let page = props.page;
     let item1 = props.itemCount * page;
-    let item2 = item1 - 5;
+    let item2 = item1 - props.itemCount;
     let sli = props.todo.slice(item2, item1)
                     
     return (
