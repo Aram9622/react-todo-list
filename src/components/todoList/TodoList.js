@@ -21,7 +21,7 @@ export default function TodoList(props) {
                     <Table  aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell><Checkbox/></TableCell>
+                                <TableCell>#</TableCell>
                                 <TableCell>Title</TableCell>
                                 <TableCell align="left">Edit</TableCell>
                                 <TableCell align="left">Delete</TableCell>
