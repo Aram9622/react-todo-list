@@ -1,0 +1,16 @@
+.header {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 10px;
+    background-color: #e5e5e5;
+    position: fixed;
+    width: 100%;
+    top: 0;
+}
+.header a {
+    display: block;
+    padding: 10px 50px;
+    border:1px solid;
+    text-decoration: none;
+    color: black
+}
