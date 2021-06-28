@@ -1,3 +1,4 @@
+import React from 'react'
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -8,18 +9,20 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import UnarchiveIcon from '@material-ui/icons/Unarchive';
-export default function Archive(props) {
 
+function Archive(props) {
+    
     let archiveLocale = JSON.parse(window.localStorage.getItem('archive'))
-    console.log(archiveLocale)
+    console.log(props)
     return (
         <>
+        {props.data.length > 0 ? 
             <TableContainer component={Paper}>
                 <Table aria-label="simple table">
                     <TableHead>
                         <TableRow>
                             <TableCell>Title</TableCell>
-                            <TableCell align="right">Active</TableCell>
+                            <TableCell align="right">Activate</TableCell>
                             {/* <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
                         </TableRow>
                     </TableHead>
@@ -48,6 +51,9 @@ export default function Archive(props) {
                     </TableBody>
                 </Table>
             </TableContainer>
+        : null}
         </>
     )
 }
+
+export default React.memo(Archive)

@@ -8,7 +8,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import './style.css'
-
+import Header from "../components/header/Header";
 
 const useStyles = makeStyles(() => ({
     table: {
@@ -24,7 +24,7 @@ const useStyles = makeStyles(() => ({
 
 export default function Home() {
     const classes = useStyles();
-    let [pageCount, setPageCount] = useState(3)
+    let [pageCount, setPageCount] = useState(window.localStorage.getItem('countPerPage') ? window.localStorage.getItem('countPerPage') : 3)
     let [todo, setTodo] = useState({
         id: Date.now(),
         title: '',
@@ -100,6 +100,7 @@ export default function Home() {
 
     function filterItem(e) {
         setPageCount(Number(e.target.value))
+        window.localStorage.setItem('countPerPage', Number(e.target.value))
     }
 
     async function archivitem(id) {
@@ -135,8 +136,10 @@ export default function Home() {
             percentarrset.add(item.id)
         }
     })
+    console.log(percentarrset.size == 0 && data.length == 0)
     return (
         <>
+        <Header/>
             <div className="form-todo">
                 <h3>Title</h3>
                 <input type="text" name='title' onChange={addTodoState} value={todo.title} />
@@ -179,8 +182,8 @@ export default function Home() {
                             hideNavigation={false}
                         />
                 }
-                <p style={percentarrset.size == data.length ? { color: 'green' } : percentarrset.size == 0 ? { display: 'none' } : null}>{`Completed: ${Math.round(percentarrset.size * 100 / data.length)}`}% </p>
-                {archiveData.length > 0 ? <Archive data={archiveData} activeItem={activeitem} className='archive' /> : null}
+                <p style={percentarrset.size == data.length && data.length != 0 ? { color: 'green' } : percentarrset.size == 0 && data.length == 0 ? { display: 'none' } : null}>{`Completed: ${Math.round(percentarrset.size * 100 / data.length)}`}% </p>
+                <Archive data={archiveData} activeItem={activeitem} className='archive' />
             </div>
 
 

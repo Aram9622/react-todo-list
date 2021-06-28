@@ -53,7 +53,7 @@ export default function TodoItem(props) {
                 </TableCell>
                 <TableCell component="th" scope="row" >
                     {!isEditing ? <div className='title'>{props.data.title}</div> :
-                        <div className='title' ><input type='text' style={{ border: 'none' }} className='title inputitle' defaultValue={props.data.title} /></div>
+                        <div className='title' ><input type='text'  className='title inputitle' defaultValue={props.data.title} /></div>
                     }
                 </TableCell>
                 <TableCell align="left" >
