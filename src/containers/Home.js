@@ -139,7 +139,7 @@ export default function Home() {
     console.log(percentarrset.size == 0 && data.length == 0)
     return (
         <>
-        <Header/>
+            <Header />
             <div className="form-todo">
                 <h3>Title</h3>
                 <input type="text" name='title' onChange={addTodoState} value={todo.title} />
