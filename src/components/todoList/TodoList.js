@@ -7,18 +7,43 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TodoItem from '../todoItem/todoItem';
-import Checkbox from '@material-ui/core/Checkbox';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import { useState } from 'react';
 export default function TodoList(props) {
     let page = props.page;
     let item1 = props.itemCount * page;
     let item2 = item1 - props.itemCount;
     let sli = props.todo.slice(item2, item1)
-                    
+
+    let [filterBy, setFilterBy] = useState(true)
+    function filterByTodo(e) {
+        setFilterBy(e.target.value)
+      
+        sli = props.todo.reverse()
+       
+    }
     return (
         <>
+            <div className='filter-by'>
+                <p>Filter By</p>
+                <FormControl>
+                    <Select
+                        value={filterBy}
+                        onChange={filterByTodo}
+                        displayEmpty
+                        inputProps={{ 'aria-label': 'Without label' }}
+                    >
+                        <MenuItem value={true}>ASC</MenuItem>
+                        <MenuItem value={false}>DESC</MenuItem>
+                    </Select>
+                </FormControl>
+            </div>
+
             <div className="todo-list">
                 <TableContainer component={Paper}>
-                    <Table  aria-label="simple table">
+                    <Table aria-label="simple table">
                         <TableHead>
                             <TableRow>
                                 <TableCell>#</TableCell>

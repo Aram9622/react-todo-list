@@ -21,3 +21,6 @@
 .form-todo .todo-list {
     margin-top: 50px;
 }
+.filter-by .MuiFormControl-root {
+    width: 120px;
+}

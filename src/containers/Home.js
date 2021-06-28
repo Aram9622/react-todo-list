@@ -136,7 +136,6 @@ export default function Home() {
             percentarrset.add(item.id)
         }
     })
-    console.log(percentarrset.size == 0 && data.length == 0)
     return (
         <>
             <Header />
@@ -162,6 +161,7 @@ export default function Home() {
                         <MenuItem value={3}>3</MenuItem>
                         <MenuItem value={5}>5</MenuItem>
                         <MenuItem value={10}>10</MenuItem>
+                        <MenuItem value={15}>15</MenuItem>
                     </Select>
                 </FormControl>
                 <p></p>
